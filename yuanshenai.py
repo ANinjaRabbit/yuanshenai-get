@@ -4,17 +4,16 @@ import requests
 import time
 import pygame
 import wave
+import sys
 def wait():
     while pygame.mixer.get_busy():
         time.sleep(0.2)
 def gettimeID():
-    retstring = "3145464635"
-    retstr = str(time.time() -1677211110)
+    retstring = "314546463"
+    retstr = str(time.time() - 1676700000)
+    retstring+=retstr[0]
     for i in range(5):
-        if retstr[i] == "9":
-            retstring+="3f"
-        else:
-            retstring+="4"+retstr[i]
+        retstring+=str(hex(0x3f + int(retstr[i+1]))).replace("0x","")
     return retstring
 
 def StringToCode(string):
@@ -63,7 +62,7 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 
 
 
-input1 = str(input())
+input1 = sys.argv[1]
 url = "https://ai-api.baimianxiao.cn/download/e5b5bdf89fc1/"+StringToCode(input1)+"/0.6/0.6/1.2/"+gettimeID()+".wav"
 print(url)
 response = requests.get(url,headers = headers)
